@@ -1,36 +1,40 @@
-const radomMeal = document.getElementById("meals");
+const radomMeal = document.getElementById("randomimg");
 const searchInput = document.getElementById("search-item");
 const searchBtn = document.getElementById("search-reciepe");
 // Getting the random meal from the API
 const getRandomMeal = async () => {
   const res = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`);
   const randomMealData = await res.json();
-  // Calling the loadRandomMeal function
-  // console.log(randomMealData.meals[0]);
+
   loadRandomMeal(randomMealData.meals[0]);
 };
 
 // Loading the random meal
 async function loadRandomMeal(randomMealData) {
-  const div = document.createElement("div");
-  div.classList.add("meals");
-  div.innerHTML = `        <div class="meal-box">
-    <span class="random-recipe"> Random Meal</span>
-    <img id="random-recipeImg" src= ${randomMealData.strMealThumb} alt="random-recipe" />
+  const img = document.createElement("img");
+  const para = document.createElement("p");
+  para.classList.add("random-recipe-name");
+  img.classList.add("random-recipeImg");
+  img.src = randomMealData.strMealThumb;
+  // div.innerHTML = `        <div class="meal-box">
+  //   <span class="random-recipe"> Random Meal</span>
+  //   <img id="random-recipeImg" src= ${randomMealData.strMealThumb} alt="random-recipe" />
 
-    <div class="meal-img">
-      <img src="" alt="" />
-    </div>
-    <div class="meal-description">
-      <h4>${randomMealData.strMeal}</h4>
-      <button id= "btn" class="fav-btn">
-        <i class="fas fa-heart"></i>
-      </button>
-    </div>
-  </div>`;
-  const btn = div.querySelector(".meal-description .fav-btn");
+  //   <div class="meal-img">
+  //     <img src="" alt="" />
+  //   </div>
+  //   <div class="meal-description">
+  //     <h4>${randomMealData.strMeal}</h4>
+  //     <button id= "btn" class="fav-btn">
+  //       <i class="fas fa-heart"></i>
+  //     </button>
+  //   </div>
+  // </div>`;
+  // const btn = div.querySelector(".meal-description .fav-btn");
 
-  radomMeal.append(div);
+  para.innerText = `${randomMealData.strMeal}`;
+  radomMeal.append(img);
+  radomMeal.append(para);
   btn.addEventListener("click", () => {
     if (btn.classList.contains("active")) {
       removeFromLs(randomMealData.idmeal);
@@ -62,6 +66,7 @@ const getMealsBySearch = async (search) => {
     `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
   );
   const mealBySearchData = await res.json();
+  console.log(mealBySearchData);
   return mealBySearchData.meals;
 };
 
