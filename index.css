@@ -15,11 +15,12 @@ body {
 /* Header  */
 header {
   background-color: #ffc300;
+  text-align: center;
 }
 header nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   overflow-x: hidden;
   height: 10rem;
 }
@@ -97,9 +98,9 @@ span {
 .random-recipe-name {
   text-align: center;
   width: 30%;
-  margin-left: 20rem;
+  position: absolute;
+  left: 35%;
   margin-top: 0;
-  color: black;
   font-size: 1.2rem;
   font-weight: 300;
   color: rgb(87, 87, 87);
@@ -196,7 +197,7 @@ span {
   display: flex;
   justify-content: start;
   align-items: start;
-  width: 62%;
+  width: 70%;
   position: relative;
   background-color: #ffc300;
 }
@@ -250,14 +251,10 @@ span {
   width: 100%;
   height: 100vh;
   overflow-y: auto;
-  /* margin-top: 2rem;
-  margin-bottom: 2rem; */
 }
 .searchedMeal {
-  width: 30%;
   height: 30vh;
   margin: 1rem;
-
   border-radius: 1px solid rgb(0, 0, 0);
   position: relative;
 }
@@ -290,4 +287,52 @@ span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Responsiveness */
+
+@media screen and (max-width: 1541px) {
+  .searchedMeals {
+    justify-content: space-around;
+  }
+  #randomimg {
+    margin-right: 3rem;
+  }
+}
+@media screen and (max-width: 1274px) {
+  .random-recipeImg {
+    height: 57vh;
+  }
+}
+@media screen and (max-width: 1111px) {
+  .searchedMeal {
+    height: 24vh;
+    width: 28vw;
+  }
+}
+
+@media screen and (max-width: 733px) {
+  main {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #randomimg {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    height: 50vh;
+  }
+  .welcome {
+    height: 31vh;
+    width: 100%;
+  }
+
+  .random-recipeImg {
+    height: 43vh;
+    width: 62%;
+  }
+  .random-recipe-name {
+    bottom: 0;
+  }
 }
