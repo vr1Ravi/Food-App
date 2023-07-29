@@ -330,6 +330,12 @@ a {
 }
 
 @media screen and (max-width: 733px) {
+  #search-item {
+    font-size: 13px;
+  }
+  header nav {
+    height: 5rem;
+  }
   .search {
     width: 63%;
   }
@@ -342,12 +348,13 @@ a {
   .logo {
     padding-left: 0;
     font-size: 1.5rem;
+    margin-right: 4rem;
   }
   main {
     display: grid;
   }
   .welcome h1 {
-    font-size: 3rem;
+    font-size: 2rem;
   }
   #randomimg {
     width: 100vw;
@@ -365,7 +372,7 @@ a {
     height: 31vh;
   }
   .random-recipe-name {
-    bottom: 78px;
+    bottom: 42px;
   }
   .mealIngredieantInfo > ul > li {
     font-size: 1rem;
@@ -373,6 +380,10 @@ a {
 
   .mealIngredieantInfo > p {
     font-size: 1rem;
+  }
+  .random-recipe-name {
+    padding: 0;
+    font-size: 10px;
   }
 }
 @media screen and (max-width: 400px) {
@@ -388,7 +399,8 @@ a {
   }
 }
 @media screen and (max-width: 380px) {
-  .welcome h1 {
-    font-size: 2rem;
+  .welcome h1,
+  p {
+    font-size: 1rem;
   }
 }
