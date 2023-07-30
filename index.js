@@ -1,3 +1,4 @@
+// Getting the elements from the DOM
 const radomMeal = document.getElementById("randomimg");
 const searchBtn = document.getElementById("search-reciepe");
 const searchInput = document.getElementById("search-item");
@@ -34,7 +35,7 @@ const getMealsBySearch = async (search) => {
   const mealBySearchData = await res.json();
   return mealBySearchData.meals;
 };
-// Adding the event listener to the search button
+// Adding the event listener to the searched meal
 searchBtn.addEventListener("click", async () => {
   searchItemValue = searchInput.value;
   searchedMeals.innerHTML = "";

@@ -1,5 +1,6 @@
+// Description: This file contains the code for the recipe page
+
 const left = document.querySelector(".left");
-console.log(left);
 
 // Getting the meal by ID from the API
 const getMealById = async (id) => {
@@ -10,6 +11,7 @@ const getMealById = async (id) => {
   console.log(mealByIdData.meals[0]);
   loadMealById(mealByIdData.meals[0]);
 };
+// Functiion to load the meal by ID and adding result to left div
 function loadMealById(mealByIdData) {
   left.innerHTML = `<h1>${mealByIdData.strMeal}</h1>
       <div class="favMeal">
@@ -44,9 +46,11 @@ function loadMealById(mealByIdData) {
   mealIngredieantInfo.prepend(h2);
 }
 
+// Function to get the meal from local storage
 function getMealsFromLS() {
   const mealId = JSON.parse(localStorage.getItem("mealId"));
   return mealId === null ? "Please SelectMeal" : mealId;
 }
 const mealId = getMealsFromLS();
+// Calling the function to get the meal by ID
 getMealById(mealId);

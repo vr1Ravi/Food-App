@@ -117,6 +117,8 @@ span {
   /* padding: 1rem; */
   margin-top: 6rem;
 }
+
+/* Recipe Page */
 .left {
   width: 100%;
   height: inherit;
@@ -204,6 +206,8 @@ span {
   width: 100px;
   height: 100px;
 }
+
+/* Search Section */
 .right {
   display: flex;
   justify-content: start;
