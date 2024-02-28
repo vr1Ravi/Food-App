@@ -1,58 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recipe App</title>
-    <link rel="stylesheet" href="index.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="index.css" />
+    <title>RECIPE</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <div class="logo">
-          <h1>DishDelight</h1>
-        </div>
-      </nav>
-    </header>
-
-    <main>
-      <div class="welcome">
-        <h1>
-          Let's Start <br />
-          Cooking With <br />Popular <span>Recipes</span>
-        </h1>
-        <p>
-          Want to learn cook but confused how to start? <br />
-          <span>No need to worry again</span>
-        </p>
-      </div>
-      <div id="randomimg"></div>
-    </main>
-    <div class="meal-box">
-      <div class="right">
-        <div class="searchedMeals">
-          <h1>
-            <i class="fa-solid fa-star-half-stroke fa-spin"></i>Meals Will
-            Appear here (;
-            <i class="fa-solid fa-star-half-stroke fa-spin"></i>
-          </h1>
-        </div>
-
-        <div class="search">
-          <input id="search-item" type="text" placeholder="search by Keyword" />
-          <button id="search-reciepe">
-            <i class="fa-sharp fa-solid fa-paper-plane icon"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <script src="index.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
