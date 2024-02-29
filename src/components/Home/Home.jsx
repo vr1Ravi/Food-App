@@ -22,11 +22,11 @@ const Home = () => {
         <img
           src={randomMeal.strMealThumb}
           alt="randomMeal"
-          className=" h-full w-full rounded-md  object-cover shadow-lg"
+          className=" h-full w-full  object-cover shadow-lg"
         />
       ) : (
-        <div class="flex h-full w-full animate-pulse shadow">
-          <div class=" -mt-4 h-[105%] w-full bg-slate-200"></div>
+        <div className="flex h-full w-full animate-pulse shadow">
+          <div className=" -mt-4 h-[105%] w-full bg-slate-200"></div>
         </div>
       )}
 

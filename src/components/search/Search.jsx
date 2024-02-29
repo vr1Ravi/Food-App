@@ -1,15 +1,33 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import NotFound from "../../assets/not-found.png";
-import { getMealsByName } from "../../api/api";
-import Comp from "./Comp";
+import Meals from "./Meals";
+import MealsSkeleton from "./MealsSkeleton";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setMeals } from "../../searchMeals";
+import { useFetchMealsQuery } from "../../api/api";
 const Search = () => {
-  const [showSkeleton, setShowSekeleton] = useState(false);
+  const [input, setInput] = useState(localStorage.getItem("search") || "");
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem("search") || "",
+  );
+  const [loading, setLoading] = useState(false);
+
+  const { isLoading, data } = useFetchMealsQuery(searchQuery);
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setSearchQuery(input);
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(id);
+  }, [input]);
+
   const handleSearch = async (e) => {
-    setShowSekeleton(true);
-    const query = e.target.value;
-    const meals = await getMealsByName(query);
+    setLoading(true);
+    setInput(e.target.value);
+    localStorage.setItem("search", e.target.value);
   };
   return (
     <div className="h-[90vh]">
@@ -19,17 +37,55 @@ const Search = () => {
           className="w-full rounded-md p-4 shadow-lg outline-none"
           placeholder="Search for a recipe..."
           onChange={handleSearch}
+          value={input}
         />
         <Link to="/">
           <CloseIcon className="absolute right-4 top-1/3 text-2xl text-gray-300" />
         </Link>
       </div>
       <div className="h-full w-full overflow-y-auto">
-        <h1 className="ml-4 mt-4 font-bold">
-          Showing results for {`"${"Dal"}"`}
-        </h1>
-        <div className=" grid h-full w-full grid-cols-1 gap-3  p-4 md:grid-cols-2 lg:grid-cols-5">
-          {showSkeleton && <></>}
+        {input && (
+          <h1 className="ml-4 mt-4 font-bold">
+            Showing results for {`"${input}"`}
+          </h1>
+        )}
+        <div className=" grid h-full w-full grid-cols-1 gap-3  p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          {input && (loading || isLoading) ? (
+            <>
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+            </>
+          ) : input && !data?.length ? (
+            <div className=" absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
+              <img
+                className="h-[100px] w-[100px]"
+                src={NotFound}
+                alt="not-found"
+              />
+              <h1 className="text-2xl font-bold">
+                Search for something else...
+              </h1>
+            </div>
+          ) : (
+            input &&
+            data?.map((meal) => (
+              <Meals
+                key={meal.idMeal}
+                img={meal.strMealThumb || ""}
+                name={meal.strMeal}
+                id={meal.idMeal}
+                tags={meal.strTags?.split(",").slice(0, 3)}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
