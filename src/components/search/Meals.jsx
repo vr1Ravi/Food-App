@@ -1,10 +1,11 @@
 import React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { Link } from "react-router-dom";
-const Meals = ({ img, name, id, tags = [] }) => {
+
+const Meals = ({ img, name, id, tags = ["- -"], stars }) => {
   return (
     <Link
-      to={`/recipe/${id}`}
+      to={`/meal/${id}`}
       className="mx-auto h-fit w-full max-w-sm rounded-md border border-blue-300 p-4 shadow"
     >
       <div>
@@ -34,7 +35,11 @@ const Meals = ({ img, name, id, tags = [] }) => {
                 ))
               )}
             </div>
-            {tags.length === 0 ? (
+            {stars ? (
+              stars.map((_, index) => (
+                <StarIcon key={index} className="text-orange-500" />
+              ))
+            ) : tags.length === 0 ? (
               <StarIcon className="text-orange-500" />
             ) : (
               tags.map((_, index) => (

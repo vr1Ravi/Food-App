@@ -5,8 +5,6 @@ import NotFound from "../../assets/not-found.png";
 import Meals from "./Meals";
 import MealsSkeleton from "./MealsSkeleton";
 
-import { useDispatch, useSelector } from "react-redux";
-import { setMeals } from "../../searchMeals";
 import { useFetchMealsQuery } from "../../api/api";
 const Search = () => {
   const [input, setInput] = useState(localStorage.getItem("search") || "");
@@ -14,13 +12,12 @@ const Search = () => {
     localStorage.getItem("search") || "",
   );
   const [loading, setLoading] = useState(false);
-
-  const { isLoading, data } = useFetchMealsQuery(searchQuery);
+  const { isFetching, data: meals } = useFetchMealsQuery(searchQuery);
   useEffect(() => {
     const id = setTimeout(() => {
       setSearchQuery(input);
       setLoading(false);
-    }, 2000);
+    }, 1000);
     return () => clearTimeout(id);
   }, [input]);
 
@@ -50,20 +47,13 @@ const Search = () => {
           </h1>
         )}
         <div className=" grid h-full w-full grid-cols-1 gap-3  p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {input && (loading || isLoading) ? (
+          {input && (loading || isFetching) ? (
             <>
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
-              <MealsSkeleton />
+              {[...Array(10)].map((_, index) => (
+                <MealsSkeleton key={index} />
+              ))}
             </>
-          ) : input && !data?.length ? (
+          ) : input && !meals?.length ? (
             <div className=" absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center">
               <img
                 className="h-[100px] w-[100px]"
@@ -76,7 +66,7 @@ const Search = () => {
             </div>
           ) : (
             input &&
-            data?.map((meal) => (
+            meals?.map((meal) => (
               <Meals
                 key={meal.idMeal}
                 img={meal.strMealThumb || ""}
