@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import searchMeals from "./searchMeals";
+import user from "./userSlice";
 import { mealApi } from "./api/api";
 const store = configureStore({
   reducer: {
-    searchMeals,
+    user,
     [mealApi.reducerPath]: mealApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

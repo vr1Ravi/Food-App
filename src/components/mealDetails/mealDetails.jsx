@@ -7,6 +7,7 @@ const MealDetails = () => {
   const [ingredients, setIngredients] = useState([]);
   console.log(ingredients);
   const { isFetching, data: meal } = useFetchMealByIdQuery(id);
+
   useEffect(() => {
     if (meal) {
       const ingredients = Object.keys(meal).filter(

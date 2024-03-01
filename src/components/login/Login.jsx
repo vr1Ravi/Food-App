@@ -1,13 +1,15 @@
 import Home from "../home/Home";
 import Logo from "../../assets/logo.png";
-import { signInWithPhoneNumber } from "firebase/auth";
+import OtpInput from "react-otp-input";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 const Login = () => {
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.user);
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const name = formData.get("name");
-    const number = formData.get("number");
+    const name = e.target.name.value;
+    const number = e.target.number.value;
   };
   return (
     <>
@@ -31,23 +33,55 @@ const Login = () => {
             required
             type="text"
             name="name"
+            maxLength={10}
             className="w-4/5 rounded-md border border-gray-300 p-3 outline-none"
-            placeholder="Enter name"
+            placeholder="Enter nick name"
           />
           <input
             required
             type="number"
             name="number"
+            pattern="[0-9]{4}"
             style={{ appearance: "textfield" }}
             className="w-4/5  rounded-md border border-gray-300 p-3 outline-none"
-            placeholder="Enter mobile number"
+            placeholder="Enter 4 digit code"
           />
-          <button
-            type="submit"
-            className="w-[50%] rounded-md bg-green-500 p-3 text-white"
-          >
-            Continue
-          </button>
+
+          {loading ? (
+            <button
+              type="button"
+              className="w-[50%] rounded-md bg-green-500 p-3 text-white"
+              disabled
+            >
+              <svg
+                class=" m-auto h-5 w-5 animate-spin text-center text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-[50%] rounded-md bg-green-500 p-3 text-white"
+            >
+              Continue
+            </button>
+          )}
         </form>
       </div>
     </>

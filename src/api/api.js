@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import axios from "axios";
+import {
+  loginUserFailure,
+  loginUserRequest,
+  loginUserSuccess,
+} from "../userSlice";
 export const mealApi = createApi({
   reducerPath: "mealApi",
   baseQuery: fetchBaseQuery({
@@ -35,3 +40,17 @@ export const {
   useFetchMealByIdQuery,
   useFetchMealByTypeQuery,
 } = mealApi;
+
+export const loginUser = async (dispatch, name, password) => {
+  try {
+    dispatch(loginUserRequest());
+    const { data } = await axios.post("/api/v1/login", {
+      name,
+      password,
+    });
+    dispatch(loginUserSuccess(data.user));
+  } catch (error) {
+    console.log(error);
+    dispatch(loginUserFailure(error.message));
+  }
+};
