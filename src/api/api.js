@@ -4,6 +4,15 @@ import {
   loginUserFailure,
   loginUserRequest,
   loginUserSuccess,
+  sendOtpRequest,
+  sendOtpSuccess,
+  sendOtpFailure,
+  loadUserRequest,
+  loadUserSuccess,
+  loadUserFailure,
+  logoutUserRequest,
+  logoutUserSuccess,
+  logoutUserFailure,
 } from "../userSlice";
 export const mealApi = createApi({
   reducerPath: "mealApi",
@@ -41,16 +50,51 @@ export const {
   useFetchMealByTypeQuery,
 } = mealApi;
 
-export const loginUser = async (dispatch, name, password) => {
+export const sendOtp = async (dispatch, email, name) => {
+  try {
+    dispatch(sendOtpRequest());
+    const { data } = await axios.post("/api/v1/sendotp", {
+      email,
+      name,
+    });
+    dispatch(sendOtpSuccess(data.message));
+  } catch (error) {
+    console.log(error);
+    dispatch(sendOtpFailure(error.message));
+  }
+};
+
+export const login = async (dispatch, name, email, otp) => {
   try {
     dispatch(loginUserRequest());
     const { data } = await axios.post("/api/v1/login", {
+      email,
       name,
-      password,
+      otp,
     });
     dispatch(loginUserSuccess(data.user));
   } catch (error) {
     console.log(error);
     dispatch(loginUserFailure(error.message));
+  }
+};
+export const logoutUser = async (dispatch) => {
+  try {
+    dispatch(logoutUserRequest());
+    const { data } = await axios.get("/api/v1/logout");
+    dispatch(loginUserSuccess(data.message));
+  } catch (error) {
+    console.log(error);
+    dispatch(logoutUserFailure(error.message));
+  }
+};
+export const loadUser = async (dispatch) => {
+  try {
+    dispatch(loadUserRequest());
+    const { data } = await axios.get("/api/v1/me");
+    dispatch(loadUserSuccess(data.user));
+  } catch (error) {
+    console.log(error);
+    dispatch(loadUserFailure());
   }
 };
