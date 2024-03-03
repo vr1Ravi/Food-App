@@ -1,18 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import {
-  loginUserFailure,
-  loginUserRequest,
   loginUserSuccess,
-  sendOtpRequest,
-  sendOtpSuccess,
-  sendOtpFailure,
   loadUserRequest,
   loadUserSuccess,
   loadUserFailure,
-  logoutUserRequest,
   logoutUserSuccess,
-  logoutUserFailure,
 } from "../userSlice";
 export const mealApi = createApi({
   reducerPath: "mealApi",
@@ -50,23 +43,21 @@ export const {
   useFetchMealByTypeQuery,
 } = mealApi;
 
-export const sendOtp = async (dispatch, email, name) => {
+export const sendOtp = async (email, name) => {
   try {
-    dispatch(sendOtpRequest());
     const { data } = await axios.post("/api/v1/sendotp", {
       email,
       name,
     });
-    dispatch(sendOtpSuccess(data.message));
+    return data.message;
   } catch (error) {
     console.log(error);
-    dispatch(sendOtpFailure(error.message));
+    return null;
   }
 };
 
 export const login = async (dispatch, name, email, otp) => {
   try {
-    dispatch(loginUserRequest());
     const { data } = await axios.post("/api/v1/login", {
       email,
       name,
@@ -75,17 +66,16 @@ export const login = async (dispatch, name, email, otp) => {
     dispatch(loginUserSuccess(data.user));
   } catch (error) {
     console.log(error);
-    dispatch(loginUserFailure(error.message));
+    return null;
   }
 };
 export const logoutUser = async (dispatch) => {
   try {
-    dispatch(logoutUserRequest());
     const { data } = await axios.get("/api/v1/logout");
-    dispatch(loginUserSuccess(data.message));
+    dispatch(logoutUserSuccess());
+    return data.message;
   } catch (error) {
     console.log(error);
-    dispatch(logoutUserFailure(error.message));
   }
 };
 export const loadUser = async (dispatch) => {
@@ -98,3 +88,13 @@ export const loadUser = async (dispatch) => {
     dispatch(loadUserFailure());
   }
 };
+export const addOrRemoveFav = async (dispatch, meal) => {
+  try {
+    const { data } = await axios.put("/api/v1/addfavorite", { meal });
+    return data.message;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+// img, name, id, tags = ["- -"],

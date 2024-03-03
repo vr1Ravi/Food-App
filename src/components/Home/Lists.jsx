@@ -35,9 +35,9 @@ const Lists = ({ list, title }) => {
             to={`/category?${item.type}=${item.title}`}
             key={item.title}
             style={{ backgroundImage: `url(${item.src})` }}
-            className="m-2 flex h-[150px] w-[150px] flex-shrink-0 items-center justify-center rounded-full bg-slate-300 bg-cover opacity-80 shadow-lg hover:opacity-75"
+            className=" relative m-2 flex h-[150px] w-[150px] flex-shrink-0 items-center justify-center rounded-full  bg-slate-300 bg-cover opacity-80 shadow-lg content-[''] after:absolute after:left-0 after:top-0 after:h-full after:w-full after:rounded-full after:bg-black after:opacity-50  hover:opacity-75"
           >
-            <i className="overflow-hidden text-ellipsis whitespace-nowrap text-center text-xl font-semibold text-white">
+            <i className=" z-10 overflow-hidden text-ellipsis whitespace-nowrap text-center text-xl font-semibold text-white">
               {item.title}
             </i>
           </Link>

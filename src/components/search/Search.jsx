@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import NotFound from "../../assets/not-found.png";
 import Meals from "./Meals";
 import MealsSkeleton from "./MealsSkeleton";
+import { MealTags } from "../home/list";
 
 import { useFetchMealsQuery } from "../../api/api";
 const Search = () => {
@@ -66,13 +67,24 @@ const Search = () => {
             </div>
           ) : (
             input &&
-            meals?.map((meal) => (
+            meals?.map((meal, idx) => (
               <Meals
                 key={meal.idMeal}
                 img={meal.strMealThumb || ""}
                 name={meal.strMeal}
                 id={meal.idMeal}
-                tags={meal.strTags?.split(",").slice(0, 3)}
+                tags={
+                  meal.strTags?.split(",").slice(0, 3) || idx % 2 === 0
+                    ? [
+                        MealTags[Math.floor(Math.random() * 18)],
+                        MealTags[Math.floor(Math.random() * 18)],
+                      ]
+                    : [
+                        MealTags[Math.floor(Math.random() * 18)],
+                        MealTags[Math.floor(Math.random() * 18)],
+                        MealTags[Math.floor(Math.random() * 18)],
+                      ]
+                }
               />
             ))
           )}

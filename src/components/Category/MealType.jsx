@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import Meals from "../search/Meals";
 import MealsSkeleton from "../search/MealsSkeleton";
 import { useFetchMealByTypeQuery } from "../../api/api";
-
+import { MealTags } from "../home/list";
 const MealType = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -13,7 +13,6 @@ const MealType = () => {
     type: a ? "a" : "c",
     value: a || c,
   });
-  console.log(a, c);
   return (
     <div className="h-full w-full overflow-y-auto">
       <h1 className="p-4 text-3xl font-bold">{a ? "Area" : "Category"}</h1>
@@ -25,12 +24,24 @@ const MealType = () => {
             ))}
           </>
         ) : (
-          meals?.map((meal) => (
+          meals?.map((meal, idx) => (
             <Meals
               key={meal.idMeal}
               img={meal.strMealThumb || ""}
               name={meal.strMeal}
               id={meal.idMeal}
+              tags={
+                idx % 2 === 0
+                  ? [
+                      MealTags[Math.floor(Math.random() * 18)],
+                      MealTags[Math.floor(Math.random() * 18)],
+                    ]
+                  : [
+                      MealTags[Math.floor(Math.random() * 18)],
+                      MealTags[Math.floor(Math.random() * 18)],
+                      MealTags[Math.floor(Math.random() * 18)],
+                    ]
+              }
               stars={Array(
                 Math.floor(
                   meal.idMeal

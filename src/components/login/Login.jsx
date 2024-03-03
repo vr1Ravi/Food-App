@@ -1,34 +1,35 @@
 import Home from "../home/Home";
 import Logo from "../../assets/logo.png";
 import OtpInput from "react-otp-input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, sendOtp } from "../../api/api";
 import LoadingBtn from "./LoadingBtn";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { setErrMess } from "../../userSlice";
 const Login = () => {
   const [otp, setOtp] = useState();
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [showOtpBox, setShowOtpBox] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { loading, error, message } = useSelector((state) => state.user);
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const name = e.target.name.value;
     const email = e.target.email.value;
 
     setName(name);
     setEmail(email);
-    const mess = await sendOtp(dispatch, email, name);
-    if (mess) {
-      toast.success(message, {
+    const res = await sendOtp(email, name);
+    setLoading(false);
+    if (res !== null) {
+      toast.success(res, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -38,9 +39,9 @@ const Login = () => {
         progress: undefined,
         theme: "colored",
       });
-    }
-    if (error) {
-      toast.error(error, {
+      setShowOtpBox(true);
+    } else {
+      toast.error("Server Error", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -49,14 +50,29 @@ const Login = () => {
         draggable: true,
         progress: undefined,
         theme: "colored",
-        transition: Bounce,
       });
     }
-    setShowOtpBox(true);
   };
 
   const handleOtpSend = async (e) => {
-    await login(dispatch, name, email, otp);
+    setLoading(true);
+    const res = await login(dispatch, name, email, otp);
+    setLoading(false);
+    if (res !== null) {
+      setShowOtpBox(true);
+      navigate("/");
+    } else {
+      toast.error("Server Error", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   const otpStyle = {
@@ -65,33 +81,9 @@ const Login = () => {
     outline: "none",
     borderRadius: "5px",
   };
-  if (user) navigate("/");
+
   return (
     <div>
-      {message &&
-        dispatch(setErrMess()) &&
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        })}
-      {error &&
-        dispatch(setErrMess()) &&
-        toast.error(error, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        })}
       <div className="opacity-80">
         <Home />
       </div>
@@ -102,7 +94,6 @@ const Login = () => {
         <CloseIcon
           onClick={() => {
             navigate("/");
-            dispatch(setErrMess());
           }}
           className=" absolute right-0 top-0 cursor-pointer text-xl text-black"
         />
@@ -113,7 +104,7 @@ const Login = () => {
             {showOtpBox ? "Enter Otp" : "Login or Signup"}
           </h1>
         </div>
-        {showOtpBox && !error ? (
+        {showOtpBox ? (
           <div className="flex w-[90%] flex-col items-center justify-evenly *:mb-3">
             <OtpInput
               value={otp}

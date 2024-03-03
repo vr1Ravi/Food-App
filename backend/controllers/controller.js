@@ -24,7 +24,7 @@ export const sendOtp = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { name, email, otp } = req.body;
-    console.log(otp, cache[email]);
+
     const isOtpValid = cache[email] == otp;
 
     if (!isOtpValid) {
@@ -34,9 +34,15 @@ export const login = async (req, res) => {
       });
     }
 
-    let user = await User.findOne({ name, email });
+    let user = await User.findOne({ email });
 
     if (user) {
+      if (user.name !== name) {
+        return res.status(404).json({
+          message: "Invalid Name",
+        });
+      }
+
       const token = await user.generateToken();
       return res
         .cookie("token", token, {
@@ -69,17 +75,31 @@ export const login = async (req, res) => {
   }
 };
 
-export const addFavorite = async (req, res) => {
+export const addOrRemoveFavorite = async (req, res) => {
   try {
     const { meal } = req.body;
+
     if (!meal) {
       return res.status(400).json({
         message: "Please provide a meal",
       });
     }
+
     const user = req.user;
+    const mealId = meal.id;
+    const existingIndex = user.favorites.findIndex((fav) => fav.id === mealId);
+
+    if (existingIndex !== -1) {
+      user.favorites.splice(existingIndex, 1);
+      await user.save();
+      return res.status(200).json({
+        message: "Meal removed from favorites",
+      });
+    }
+
     user.favorites.push(meal);
     await user.save();
+
     return res.status(200).json({
       message: "Meal added to favorites",
     });
@@ -90,6 +110,7 @@ export const addFavorite = async (req, res) => {
     });
   }
 };
+
 export const getUser = async (req, res) => {
   try {
     const user = req.user;
@@ -111,6 +132,7 @@ export const logout = async (req, res) => {
         httpOnly: true,
         expires: new Date(Date.now()),
       })
+      .status(200)
       .json({
         message: "Logged out successfully",
       });

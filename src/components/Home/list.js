@@ -71,3 +71,28 @@ export const Areas = [
   { title: "Turkish", src: turkish, type: "a" },
   { title: "Vietnamese", src: vietnamese, type: "a" },
 ];
+
+export const MealTags = [
+  "Vegetarian",
+  "Vegan",
+  "PlantBased",
+  "Shellfish",
+  "Meatless",
+  "DairyFree",
+  "EggFree",
+  "Seafood",
+  "Beef",
+  "Pork",
+  "Chilli",
+  "Curry",
+  "NonVegetarian",
+  "Meat",
+  "Chicken",
+  "Veggie",
+  "Greens",
+  "Vegetable",
+  "Paneer",
+  "Fish",
+  "Lamb",
+  "Game",
+];
