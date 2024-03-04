@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import Meals from "../search/Meals";
 import MealsSkeleton from "../search/MealsSkeleton";
 import { useFetchMealByTypeQuery } from "../../api/api";
-import { MealTags } from "../home/list";
+import { MealTags } from "../Home/list";
 const MealType = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);

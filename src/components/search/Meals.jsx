@@ -14,7 +14,9 @@ const Meals = ({ img, name, id, tags = ["- -"], stars }) => {
         </div>
         <div className="flex-1 space-y-6 py-1">
           <div className="mt-2 h-2 w-full">
-            <h2 className="text-center">{name}</h2>
+            <h2 className="overflow-hidden text-ellipsis whitespace-nowrap text-center">
+              {name}
+            </h2>
           </div>
           <div className="space-y-3">
             <div className="grid grid-cols-3 gap-4">

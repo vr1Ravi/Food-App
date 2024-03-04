@@ -1,8 +1,8 @@
-import Home from "../home/Home";
+import Home from "../Home/Home";
 import Logo from "../../assets/logo.png";
 import OtpInput from "react-otp-input";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login, sendOtp } from "../../api/api";
 import LoadingBtn from "./LoadingBtn";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,7 +16,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

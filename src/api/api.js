@@ -88,13 +88,3 @@ export const loadUser = async (dispatch) => {
     dispatch(loadUserFailure());
   }
 };
-export const addOrRemoveFav = async (dispatch, meal) => {
-  try {
-    const { data } = await axios.put("/api/v1/addfavorite", { meal });
-    return data.message;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-// img, name, id, tags = ["- -"],

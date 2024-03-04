@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import NotFound from "../../assets/not-found.png";
 import Meals from "./Meals";
 import MealsSkeleton from "./MealsSkeleton";
-import { MealTags } from "../home/list";
+import { MealTags } from "../Home/list";
 
 import { useFetchMealsQuery } from "../../api/api";
 const Search = () => {
