@@ -74,6 +74,14 @@ const Header = () => {
               Login
             </Link>
           )}
+          {user && (
+            <Link
+              to="/favorite"
+              className="p-3 text-[12px]  font-bold  md:text-[16px]"
+            >
+              Favorite
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -1,11 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import {
+  sendOtpRequest,
+  sendOtpSuccess,
+  sendOtpFailure,
   loginUserSuccess,
+  loginUserFailure,
   loadUserRequest,
   loadUserSuccess,
   loadUserFailure,
   logoutUserSuccess,
+  loginUserRequest,
 } from "../userSlice";
 export const mealApi = createApi({
   reducerPath: "mealApi",
@@ -43,31 +48,33 @@ export const {
   useFetchMealByTypeQuery,
 } = mealApi;
 
-export const sendOtp = async (email, name) => {
-  try {
-    const { data } = await axios.post("/api/v1/sendotp", {
-      email,
-      name,
-    });
-    return data.message;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+export const sendOtp = async (dispatch, email, name) => {
+  // try {
+  //   dispatch(sendOtpRequest());
+  //   const { data } = await axios.post("/api/v1/sendotp", {
+  //     email,
+  //     name,
+  //   });
+  //   dispatch(sendOtpSuccess(data.message));
+  // } catch (error) {
+  //   console.log(error);
+  //   dispatch(sendOtpFailure(error.response.data.message));
+  // }
 };
 
 export const login = async (dispatch, name, email, otp) => {
-  try {
-    const { data } = await axios.post("/api/v1/login", {
-      email,
-      name,
-      otp,
-    });
-    dispatch(loginUserSuccess(data.user));
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  // try {
+  //   dispatch(loginUserRequest());
+  //   const { data } = await axios.post("/api/v1/login", {
+  //     email,
+  //     name,
+  //     otp,
+  //   });
+  //   dispatch(loginUserSuccess({ user: data.user, message: data.message }));
+  // } catch (error) {
+  //   console.log(error);
+  //   dispatch(loginUserFailure());
+  // }
 };
 export const logoutUser = async (dispatch) => {
   try {
@@ -88,3 +95,16 @@ export const loadUser = async (dispatch) => {
     dispatch(loadUserFailure());
   }
 };
+
+// export const addToFav  = async (dispatch, meal) =>{
+//    try {
+//     const {data} = await axios.put('/api/v1/addfavmeal', {meal})
+
+//    } catch (error) {
+
+//    }
+// }
+
+// export const removeFromFav  = async () =>{
+
+// }

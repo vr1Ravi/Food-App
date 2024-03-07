@@ -7,6 +7,17 @@ export const sendOtp = async (req, res) => {
   try {
     const otp = Math.floor(1000 + Math.random() * 9000);
     const { email, name } = req.body;
+
+    let user = await User.findOne({ email });
+
+    if (user) {
+      if (user.name !== name) {
+        return res.status(404).json({
+          message: "Invalid Name",
+        });
+      }
+    }
+
     cache[email] = otp;
     await sendEmail({ email, name, otp });
 
@@ -33,16 +44,10 @@ export const login = async (req, res) => {
         message: "Invalid OTP",
       });
     }
-
+    delete cache[email];
     let user = await User.findOne({ email });
 
     if (user) {
-      if (user.name !== name) {
-        return res.status(404).json({
-          message: "Invalid Name",
-        });
-      }
-
       const token = await user.generateToken();
       return res
         .cookie("token", token, {
@@ -51,6 +56,7 @@ export const login = async (req, res) => {
         })
         .status(200)
         .json({
+          message: `Welcom ${user.name}`,
           user,
         });
     }
@@ -125,8 +131,6 @@ export const getUser = async (req, res) => {
 };
 export const logout = async (req, res) => {
   try {
-    const userEmail = req.user.email;
-    delete cache[userEmail];
     return res
       .cookie("token", null, {
         httpOnly: true,

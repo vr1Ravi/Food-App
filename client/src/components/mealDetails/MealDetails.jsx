@@ -1,28 +1,73 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetchMealByIdQuery } from "../../api/api";
 import { useParams } from "react-router-dom";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useDispatch, useSelector } from "react-redux";
+import { MealTags } from "../Home/list";
 const MealDetails = () => {
   const { id } = useParams();
   const [ingredients, setIngredients] = useState([]);
+  const { favorites } = useSelector((state) => state.user);
   const { isFetching, data: meal } = useFetchMealByIdQuery(id);
-
+  const [loading, setLoading] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
+    setLoading(true);
     if (meal) {
+      const index = favorites.findIndex((fav) => fav.id === id);
+      console.log(index);
+      if (index !== -1) {
+        setIsLiked(true);
+      }
       const ingredients = Object.keys(meal).filter(
         (key) =>
           key.includes("strIngredient") &&
           meal[key] !== "" &&
           meal[key] !== null,
       );
+      setLoading(false);
 
       setIngredients(ingredients);
     }
   }, [meal]);
 
+  const handleAddMeal = async () => {
+    const items = Math.floor(Math.random() * 2 + 1);
+    const tags = [];
+    for (let i = 0; i < items; i++) {
+      tags.push(MealTags[Math.floor(Math.random() * 18)]);
+    }
+    const data = {
+      id: id,
+      name: meal.strMeal,
+      img: meal.strMealThumb,
+      tags: tags,
+    };
+  };
+  const handleRemoveMeal = async () => {};
   return (
     <>
       <div className="relative grid h-[80vh] grid-rows-2  place-items-center pt-4 md:grid-cols-2 md:grid-rows-1">
+        <div className="absolute right-5 top-5">
+          {!loading && !isFetching ? (
+            isLiked ? (
+              <FavoriteIcon
+                onClick={handleRemoveMeal}
+                className="text-red-700"
+                style={{ fontSize: "2rem" }}
+              />
+            ) : (
+              <FavoriteBorderIcon
+                onClick={handleAddMeal}
+                className="text-red-700"
+                style={{ fontSize: "2rem" }}
+              />
+            )
+          ) : null}
+        </div>
         <div className="animate-puls  h-full ">
           <div className="h-80 w-80 rounded-full bg-slate-200">
             {meal?.strMealThumb && (

@@ -1,8 +1,8 @@
 import Home from "../Home/Home";
 import Logo from "../../assets/logo.png";
 import OtpInput from "react-otp-input";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { login, sendOtp } from "../../api/api";
 import LoadingBtn from "./LoadingBtn";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,22 +13,36 @@ const Login = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [showOtpBox, setShowOtpBox] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { authLoading, authError, authMessage } = useSelector(
+    (state) => state.user,
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     const name = e.target.name.value;
     const email = e.target.email.value;
-
     setName(name);
     setEmail(email);
-    const res = await sendOtp(email, name);
-    setLoading(false);
-    if (res !== null) {
-      toast.success(res, {
+    await sendOtp(dispatch, email, name);
+  };
+
+  const handleOtpSend = async () => {
+    await login(dispatch, name, email, otp);
+  };
+
+  const otpStyle = {
+    width: "2rem",
+    border: "1px solid gray",
+    outline: "none",
+    borderRadius: "5px",
+  };
+  useEffect(() => {
+    if (authMessage) {
+      setShowOtpBox(true);
+      toast.success(authMessage, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -38,9 +52,12 @@ const Login = () => {
         progress: undefined,
         theme: "colored",
       });
-      setShowOtpBox(true);
-    } else {
-      toast.error("Server Error", {
+    }
+
+    if (authError) {
+      setShowOtpBox(false);
+
+      toast.error(authError, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -51,35 +68,7 @@ const Login = () => {
         theme: "colored",
       });
     }
-  };
-
-  const handleOtpSend = async (e) => {
-    setLoading(true);
-    const res = await login(dispatch, name, email, otp);
-    setLoading(false);
-    if (res !== null) {
-      setShowOtpBox(true);
-      navigate("/");
-    } else {
-      toast.error("Server Error", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
-  };
-
-  const otpStyle = {
-    width: "2rem",
-    border: "1px solid gray",
-    outline: "none",
-    borderRadius: "5px",
-  };
+  }, [authError, authMessage]);
 
   return (
     <div>
@@ -116,7 +105,7 @@ const Login = () => {
               inputType="number"
             />
 
-            {loading ? (
+            {authLoading ? (
               <LoadingBtn />
             ) : (
               <button
@@ -137,7 +126,7 @@ const Login = () => {
               type="text"
               name="name"
               maxLength={10}
-              className=" w-full rounded-md border   border-gray-300 p-3 outline-none md:w-4/5"
+              className={`w-full rounded-md border   border-gray-300 p-3 outline-none md:w-4/5 ${authError && "border-red-300"}`}
               placeholder="Enter nick name"
             />
             <input
@@ -148,7 +137,7 @@ const Login = () => {
               placeholder="Enter email"
             />
 
-            {loading ? (
+            {authLoading ? (
               <LoadingBtn />
             ) : (
               <button

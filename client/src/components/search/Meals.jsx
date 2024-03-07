@@ -1,7 +1,7 @@
-import React from "react";
 import StarIcon from "@mui/icons-material/Star";
 import { Link } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const Meals = ({ img, name, id, tags = ["- -"], stars }) => {
   return (
     <Link

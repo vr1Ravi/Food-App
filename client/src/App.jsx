@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { loadUser } from "./api/api";
 import GlobalCatch from "./components/GlobalCatch/GlobalCatch";
+import Favorite from "./components/Favorite/Favorite";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
             path="/login"
             element={user ? <Navigate to="/" replace /> : <Login />}
           />
+          <Route path="/favorite" element={<Favorite />} />
           <Route path="*" element={<GlobalCatch />} />
         </Routes>
       </BrowserRouter>

@@ -4,6 +4,7 @@ import EastIcon from "@mui/icons-material/East";
 
 import { useRef } from "react";
 
+// eslint-disable-next-line react/prop-types
 const Lists = ({ list, title }) => {
   const divRef = useRef(null);
 
