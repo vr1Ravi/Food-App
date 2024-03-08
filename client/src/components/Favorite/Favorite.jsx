@@ -28,7 +28,7 @@ const Favorite = () => {
               key={meal.id}
               img={meal.img || ""}
               name={meal.name}
-              id={meal.idMeal}
+              id={meal.id}
               tags={meal.tags}
             />
           ))

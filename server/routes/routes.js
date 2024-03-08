@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.route("/sendotp").post(sendOtp);
 router.route("/login").post(login);
-router.route("/addfavorite").put(isAuth, addOrRemoveFavorite);
+router.route("/addorremovefavorite").put(isAuth, addOrRemoveFavorite);
 router.route("/logout").get(isAuth, logout);
 router.route("/me").get(isAuth, getUser);
 export { router };

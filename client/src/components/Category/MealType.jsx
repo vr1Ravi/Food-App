@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Meals from "../search/Meals";
 import MealsSkeleton from "../search/MealsSkeleton";
 import { useFetchMealByTypeQuery } from "../../api/api";
