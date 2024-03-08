@@ -9,7 +9,11 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://recipe-app-r3om.onrender.com/",
+  })
+);
 // dotenv to load environment variables
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: "config/config.env" });
