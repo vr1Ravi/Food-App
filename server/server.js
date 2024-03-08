@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://recipe-app-r3om.onrender.com/",
+    origin: " http://localhost:5173/",
   })
 );
 // dotenv to load environment variables
