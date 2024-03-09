@@ -11,7 +11,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://recipe-app-eight-cyan.vercel.app",
+    origin: [
+      "https://recipe-app-eight-cyan.vercel.app",
+      " http://localhost:5173",
+    ],
     methods: ["GET", "POST", "DELETE", "PUT"],
   })
 );

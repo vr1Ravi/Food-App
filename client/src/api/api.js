@@ -54,10 +54,12 @@ export const {
   useFetchMealByTypeQuery,
 } = mealApi;
 
+const BASE_URL = "https://recipe-app-r3om.onrender.com";
+
 export const sendOtp = async (dispatch, email, name) => {
   try {
     dispatch(sendOtpRequest());
-    const { data } = await axios.post("/api/v1/sendotp", {
+    const { data } = await axios.post(`${BASE_URL}/api/v1/sendotp`, {
       email,
       name,
     });
@@ -71,7 +73,7 @@ export const sendOtp = async (dispatch, email, name) => {
 export const login = async (dispatch, name, email, otp) => {
   try {
     dispatch(loginUserRequest());
-    const { data } = await axios.post("/api/v1/login", {
+    const { data } = await axios.post(`${BASE_URL}/api/v1/login`, {
       email,
       name,
       otp,
@@ -94,9 +96,7 @@ export const logoutUser = async (dispatch) => {
 export const loadUser = async (dispatch) => {
   try {
     dispatch(loadUserRequest());
-    const { data } = await axios.get(
-      "https://recipe-app-r3om.onrender.com/api/v1/me",
-    );
+    const { data } = await axios.get(`${BASE_URL}/api/v1/me`);
     dispatch(loadUserSuccess(data.user));
   } catch (error) {
     console.log(error);
@@ -107,7 +107,9 @@ export const loadUser = async (dispatch) => {
 export const addToFav = async (dispatch, meal) => {
   try {
     dispatch(addtoFavoritesRequest());
-    const { data } = await axios.put("/api/v1/addorremovefavorite", { meal });
+    const { data } = await axios.put(`${BASE_URL}/api/v1/addorremovefavorite`, {
+      meal,
+    });
     dispatch(addtoFavoritesSuccess(meal));
   } catch (error) {
     dispatch(addtoFavoritesFaliure(error.response.data.message));
@@ -117,7 +119,9 @@ export const addToFav = async (dispatch, meal) => {
 export const removeFromFav = async (dispatch, meal) => {
   try {
     dispatch(removeFromFavoritesRequest());
-    const { data } = await axios.put("/api/v1/addorremovefavorite", { meal });
+    const { data } = await axios.put(`${BASE_URL}/api/v1/addorremovefavorite`, {
+      meal,
+    });
     dispatch(removeFromFavoritesSuccess(meal));
   } catch (error) {
     dispatch(removeFromFavoritesFaliure(error.response.data.message));
