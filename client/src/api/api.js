@@ -54,7 +54,7 @@ export const {
   useFetchMealByTypeQuery,
 } = mealApi;
 
-const BASE_URL = "https://recipe-app-r3om.onrender.com";
+const BASE_URL = "https://recipe-app-r5a2.vercel.app";
 
 export const sendOtp = async (dispatch, email, name) => {
   try {
