@@ -133,7 +133,7 @@ const Login = () => {
               required
               type="email"
               name="email"
-              className=" w-full rounded-md border   border-gray-300 p-3 outline-none md:w-4/5"
+              className={`w-full rounded-md border   border-gray-300 p-3 outline-none md:w-4/5  ${authError && "border-red-300"}`}
               placeholder="Enter email"
             />
 

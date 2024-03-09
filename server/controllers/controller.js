@@ -7,7 +7,11 @@ export const sendOtp = async (req, res) => {
   try {
     const otp = Math.floor(1000 + Math.random() * 9000);
     const { email, name } = req.body;
-
+    if (!email || !name) {
+      res.status(400).json({
+        message: "Invalid crendentials",
+      });
+    }
     let user = await User.findOne({ email });
 
     if (user) {

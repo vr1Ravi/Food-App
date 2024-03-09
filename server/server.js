@@ -13,7 +13,8 @@ app.use(
   cors({
     origin: [
       "https://recipe-app-eight-cyan.vercel.app",
-      " http://localhost:5173",
+      "http://localhost:5173",
+      "https://recipe-app-vr1ravi.vercel.app/",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
   })
