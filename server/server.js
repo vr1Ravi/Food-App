@@ -11,7 +11,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: " http://localhost:5173",
+    origin: "https://recipe-app-eight-cyan.vercel.app",
+    methods: ["GET", "POST", "DELETE", "PUT"],
   })
 );
 // dotenv to load environment variables
