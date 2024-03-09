@@ -58,6 +58,7 @@ export const login = async (req, res) => {
           httpOnly: true,
           expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
           sameSite: "None",
+          secure: true,
         })
         .status(200)
         .json({
@@ -74,6 +75,7 @@ export const login = async (req, res) => {
         httpOnly: true,
         expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
         sameSite: "None",
+        secure: true,
       })
       .status(201)
       .json({
