@@ -94,7 +94,9 @@ export const logoutUser = async (dispatch) => {
 export const loadUser = async (dispatch) => {
   try {
     dispatch(loadUserRequest());
-    const { data } = await axios.get("/api/v1/me");
+    const { data } = await axios.get(
+      "https://recipe-app-r3om.onrender.com/api/v1/me",
+    );
     dispatch(loadUserSuccess(data.user));
   } catch (error) {
     console.log(error);

@@ -15,6 +15,7 @@ app.use(
     methods: ["GET", "POST", "DELETE", "PUT"],
   })
 );
+
 // dotenv to load environment variables
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: "config/config.env" });
@@ -24,6 +25,8 @@ if (process.env.NODE_ENV !== "production") {
 connectDataBase().catch((err) => {
   console.log(err);
 });
+
+app.get("/", (req, res) => res.send("Hello"));
 
 app.use("/api/v1", router);
 
