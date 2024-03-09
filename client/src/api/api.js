@@ -90,7 +90,9 @@ export const login = async (dispatch, name, email, otp) => {
 };
 export const logoutUser = async (dispatch) => {
   try {
-    const { data } = await axios.get("/api/v1/logout");
+    const { data } = await axios.get("/api/v1/logout", {
+      withCredentials: true,
+    });
     dispatch(logoutUserSuccess());
     return data.message;
   } catch (error) {
@@ -113,9 +115,13 @@ export const loadUser = async (dispatch) => {
 export const addToFav = async (dispatch, meal) => {
   try {
     dispatch(addtoFavoritesRequest());
-    const { data } = await axios.put(`${BASE_URL}/api/v1/addorremovefavorite`, {
-      meal,
-    });
+    const { data } = await axios.put(
+      `${BASE_URL}/api/v1/addorremovefavorite`,
+      {
+        meal,
+      },
+      { withCredentials: true },
+    );
     dispatch(addtoFavoritesSuccess(meal));
   } catch (error) {
     dispatch(addtoFavoritesFaliure(error.response.data.message));
@@ -125,9 +131,13 @@ export const addToFav = async (dispatch, meal) => {
 export const removeFromFav = async (dispatch, meal) => {
   try {
     dispatch(removeFromFavoritesRequest());
-    const { data } = await axios.put(`${BASE_URL}/api/v1/addorremovefavorite`, {
-      meal,
-    });
+    const { data } = await axios.put(
+      `${BASE_URL}/api/v1/addorremovefavorite`,
+      {
+        meal,
+      },
+      { withCredentials: true },
+    );
     dispatch(removeFromFavoritesSuccess(meal));
   } catch (error) {
     dispatch(removeFromFavoritesFaliure(error.response.data.message));
