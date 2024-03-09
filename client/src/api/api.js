@@ -73,11 +73,15 @@ export const sendOtp = async (dispatch, email, name) => {
 export const login = async (dispatch, name, email, otp) => {
   try {
     dispatch(loginUserRequest());
-    const { data } = await axios.post(`${BASE_URL}/api/v1/login`, {
-      email,
-      name,
-      otp,
-    });
+    const { data } = await axios.post(
+      `${BASE_URL}/api/v1/login`,
+      {
+        email,
+        name,
+        otp,
+      },
+      { withCredentials: true },
+    );
     dispatch(loginUserSuccess({ user: data.user, message: data.message }));
   } catch (error) {
     console.log(error);
