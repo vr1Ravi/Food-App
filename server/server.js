@@ -17,6 +17,7 @@ app.use(
       "https://recipe-app-vr1ravi.vercel.app",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
   })
 );
 
