@@ -14,7 +14,7 @@ app.use(
     origin: [
       "https://recipe-app-eight-cyan.vercel.app",
       "http://localhost:5173",
-      "https://recipe-app-vr1ravi.vercel.app/",
+      "https://recipe-app-vr1ravi.vercel.app",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
   })
