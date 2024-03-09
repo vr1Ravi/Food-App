@@ -96,7 +96,9 @@ export const logoutUser = async (dispatch) => {
 export const loadUser = async (dispatch) => {
   try {
     dispatch(loadUserRequest());
-    const { data } = await axios.get(`${BASE_URL}/api/v1/me`);
+    const { data } = await axios.get(`${BASE_URL}/api/v1/me`, {
+      withCredentials: true,
+    });
     dispatch(loadUserSuccess(data.user));
   } catch (error) {
     console.log(error);
