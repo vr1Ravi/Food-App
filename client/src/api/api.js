@@ -90,7 +90,7 @@ export const login = async (dispatch, name, email, otp) => {
 };
 export const logoutUser = async (dispatch) => {
   try {
-    const { data } = await axios.get("/api/v1/logout", {
+    const { data } = await axios.get(`${BASE_URL}/api/v1/logout`, {
       withCredentials: true,
     });
     dispatch(logoutUserSuccess());
