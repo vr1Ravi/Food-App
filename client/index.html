@@ -4,9 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RECIPE</title>
+    <title>RECIPE-APP</title>
   </head>
+  <style>
+    #modal {
+      width: 80vw;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+  </style>
   <body>
+    <div id="modal"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

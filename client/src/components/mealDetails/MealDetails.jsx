@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { addToFav, removeFromFav, useFetchMealByIdQuery } from "../../api/api";
 import { useParams } from "react-router-dom";
+import { addToFav, removeFromFav, useFetchMealByIdQuery } from "../../api/api";
+import Modal from "../Modal";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -10,12 +11,15 @@ import { toast } from "react-toastify";
 const MealDetails = () => {
   const { id } = useParams();
   const [ingredients, setIngredients] = useState([]);
+  const [loading, setLoading] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [videoId, setVideoId] = useState(false);
   const { user } = useSelector((state) => state.user);
   const { favorites } = useSelector((state) => state.user);
   const { error } = useSelector((state) => state.user);
   const { isFetching, data: meal } = useFetchMealByIdQuery(id);
-  const [loading, setLoading] = useState([]);
-  const [isLiked, setIsLiked] = useState(false);
+  console.log(meal);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,7 +60,6 @@ const MealDetails = () => {
   const handleAddMeal = () => {
     const items = Math.floor(Math.random() * 3) + 1;
     const tags = [];
-    console.log(items);
     for (let i = 0; i < items; i++) {
       tags.push(MealTags[Math.floor(Math.random() * 18)]);
     }
@@ -74,6 +77,10 @@ const MealDetails = () => {
       name: meal.strMeal,
       img: meal.strMealThumb,
     });
+  };
+  const getVideoIdFromUrl = (url) => {
+    const params = new URLSearchParams(new URL(url).search);
+    setVideoId(params.get("v"));
   };
   return (
     <>
@@ -110,6 +117,15 @@ const MealDetails = () => {
                 <h1 className="mt-2 text-center font-semibold">
                   {meal.strMeal}
                 </h1>
+                <button
+                  onClick={() => {
+                    getVideoIdFromUrl(meal.strYoutube);
+                    setShowModal(true);
+                  }}
+                  className="mx-auto mt-4 w-full rounded-md bg-orange-500 p-3 text-white"
+                >
+                  Watch Now
+                </button>
               </>
             )}
           </div>
@@ -178,6 +194,25 @@ const MealDetails = () => {
             ),
         )}
       </div>
+
+      {showModal && (
+        <Modal>
+          <div className="">
+            <button
+              className=" float-end font-bold text-orange-600"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+            <iframe
+              className=" h-[50vh] w-full md:h-[70vh]"
+              src={`https://www.youtube.com/embed/${videoId}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
