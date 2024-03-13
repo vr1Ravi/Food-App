@@ -139,15 +139,9 @@ export const getUser = async (req, res) => {
 };
 export const logout = async (req, res) => {
   try {
-    return res
-      .cookie("token", null, {
-        httpOnly: true,
-        expires: new Date(Date.now()),
-      })
-      .status(200)
-      .json({
-        message: "Logged out successfully",
-      });
+    return res.clearCookie("token").json({
+      message: "Logged out successfully",
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Server Error",
