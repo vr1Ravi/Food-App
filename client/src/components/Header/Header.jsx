@@ -33,7 +33,7 @@ const Header = () => {
       </div>
       {user && !loading && (
         <h1 className="text-center text-[12px] md:text-xl">
-          Welcom <span className="font-bold">{user.name}</span>, Happy Cooking{" "}
+          Welcome <span className="font-bold">{user.name}</span>, Happy Cooking{" "}
         </h1>
       )}
       <div>

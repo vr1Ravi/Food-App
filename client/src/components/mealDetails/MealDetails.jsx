@@ -156,7 +156,9 @@ const MealDetails = () => {
                       <FiberManualRecordIcon className="text-orange-500" />
                     </span>
                     <span className="mr-2 font-semibold">
-                      {meal[`strMeasure${idx + 1}`]},
+                      {meal[`strMeasure${idx + 1}`]
+                        ? meal[`strMeasure${idx + 1}`] + ","
+                        : null}
                     </span>{" "}
                     <p> {meal[ingredient]}</p>
                   </div>
