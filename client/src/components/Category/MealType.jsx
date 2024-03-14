@@ -6,15 +6,19 @@ import { MealTags } from "../Home/list";
 const MealType = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+
   const a = searchParams.get("a");
   const c = searchParams.get("c");
+
   const { isFetching, data: meals } = useFetchMealByTypeQuery({
     type: a ? "a" : "c",
     value: a || c,
   });
   return (
-    <div className="h-full w-full overflow-y-auto">
-      <h1 className="p-4 text-3xl font-bold">{a ? "Area" : "Category"}</h1>
+    <div className=" w-full overflow-y-auto">
+      <h1 className="p-4 text-2xl font-bold">
+        {a ? `Showing results for ${a}` : `Showing results for ${c}`}
+      </h1>
       <div className=" grid h-full w-full grid-cols-1 gap-3  p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {isFetching ? (
           <>

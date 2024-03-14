@@ -28,7 +28,7 @@ const Header = () => {
     <div className=" flex h-[10vh] w-full items-center justify-between bg-white shadow-lg">
       <div>
         <Link to={"/"}>
-          <img src={logo} alt="Logo" className="w-20 cursor-pointer p-3" />
+          <img src={logo} alt="Logo" className=" w-16 cursor-pointer p-3" />
         </Link>
       </div>
       {user && !loading && (

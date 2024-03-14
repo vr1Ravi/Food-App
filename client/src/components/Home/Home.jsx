@@ -24,12 +24,12 @@ const Home = () => {
 
   return (
     <>
-      <div className="relative mt-4 h-[70vh]">
+      <div className="relative mt-4 h-[70vh] px-4">
         {randomMeal ? (
           <img
             src={randomMeal.strMealThumb}
             alt="randomMeal"
-            className=" h-full w-full  object-cover shadow-lg"
+            className=" h-full w-full  rounded-md object-cover  shadow-lg"
           />
         ) : (
           <div className="flex h-full w-full animate-pulse shadow">

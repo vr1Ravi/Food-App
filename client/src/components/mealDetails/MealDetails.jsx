@@ -82,9 +82,10 @@ const MealDetails = () => {
     const params = new URLSearchParams(new URL(url).search);
     setVideoId(params.get("v"));
   };
+  console.log(videoId, showModal);
   return (
     <>
-      <div className="relative grid h-[80vh] grid-rows-2  place-items-center pt-4 md:grid-cols-2 md:grid-rows-1">
+      <div className="relative grid grid-rows-2  place-items-center pt-4 md:grid-cols-2 md:grid-rows-1">
         {user && (
           <div className="absolute right-5 top-5">
             {!loading && !isFetching ? (
@@ -144,7 +145,7 @@ const MealDetails = () => {
               </div>
             </>
           ) : meal ? (
-            <>
+            <div className="pl-4 md:pl-0">
               <h1 className=" mb-2 font-mono text-xl font-bold">Ingredients</h1>
               <div className="grid grid-cols-2 gap-2">
                 {ingredients.map((ingredient, idx) => (
@@ -164,39 +165,41 @@ const MealDetails = () => {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           ) : null}
         </div>
       </div>
-      <div className="animate-puls  ">
-        {meal?.strInstructions ? (
-          <>
-            <h1 className="mb-4 text-center text-2xl font-extrabold text-orange-500">
-              INSTRUCTIONS
-            </h1>
-          </>
-        ) : (
-          <div className="mx-auto h-8  w-1/4 bg-slate-200"></div>
-        )}
-      </div>
-      <div className="grid grid-cols-2 gap-1 px-3">
-        {meal?.strInstructions.split(".").map(
-          (instruction, idx) =>
-            instruction && (
-              <div key={idx} className="flex  items-start">
-                <p className="">
-                  <FiberManualRecordIcon className="text-orange-500" />
-                </p>
-                <p className="pl-2" key={instruction}>
-                  {instruction.includes("STEP")
-                    ? instruction.substring(6)
-                    : instruction}
-                </p>
-              </div>
-            ),
-        )}
-      </div>
 
+      <div className="mt-12">
+        <div className="animate-puls">
+          {meal?.strInstructions ? (
+            <>
+              <h1 className="mb-4 text-center text-2xl font-extrabold text-orange-500">
+                INSTRUCTIONS
+              </h1>
+            </>
+          ) : (
+            <div className="mx-auto h-8  w-1/4 bg-slate-200"></div>
+          )}
+        </div>
+        <div className="grid grid-cols-2 gap-3 px-3">
+          {meal?.strInstructions.split(".").map(
+            (instruction, idx) =>
+              instruction && (
+                <div key={idx} className="flex  items-start">
+                  <p className="">
+                    <FiberManualRecordIcon className="text-orange-500" />
+                  </p>
+                  <p className="pl-2" key={instruction}>
+                    {instruction.includes("STEP")
+                      ? instruction.substring(6)
+                      : instruction}
+                  </p>
+                </div>
+              ),
+          )}
+        </div>
+      </div>
       {showModal && (
         <Modal>
           <div className="">
